@@ -29,13 +29,13 @@ final case class Item(id: Int, contents: String) extends Message
 object Message {
   def error(description: String): Message      = Error(description)
   def item(id: Int, contents: String): Message = Item(id, contents)
-  
+
   implicit def encode = EncodeJson[Message]{
-    case Error(d)    => Json("error" -> Json("description" -> jString(d)))
-    case Item(id, c) => Json("item"  -> Json("id" -> jNumber(id),
-                                             "contents" -> jString(c)))
+    case Error(d)    => Json("error" -> Json("description" := d))
+    case Item(id, c) => Json("item"  -> Json("id"       := id,
+                                             "contents" := c))
   }
- 
+
   implicit def decode: DecodeJson[Message] =
     DecodeJson(c =>
       (c --\ "error").as(jdecode1L(error)("description")) |||
