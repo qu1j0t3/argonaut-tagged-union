@@ -16,4 +16,10 @@
 
 scalaVersion := "2.11.8"
 
-libraryDependencies += "io.argonaut" %% "argonaut" % "6.1"     
+libraryDependencies += "io.argonaut" %% "argonaut" % "6.1"
+
+// This version is chosen to be compatible with scalaz 7.1.x
+// to avoid a java.lang.IncompatibleClassChangeError
+libraryDependencies += "org.specs2" % "specs2-core_2.11" % "3.8.5-scalaz-7.1.10" % Test
+
+scalacOptions in Test ++= Seq("-Yrangepos")
